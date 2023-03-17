@@ -1,4 +1,10 @@
-#!/bin/bash
+#!/bin/sh
+
+###############################
+#                             #
+# 2023 | https://electri.dev/ #
+#                             #
+###############################
 
 for package in $(pacman -Qq)
 do
@@ -6,4 +12,3 @@ do
     echo $package
   fi
 done
-
