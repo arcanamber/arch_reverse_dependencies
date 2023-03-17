@@ -1,18 +1,9 @@
-##############################
-#                            #
-# 2023 | https://electri.dev #
-#                            #
-##############################
+#!/bin/bash
 
-#!/bin/sh
-# Lists all Pacman packages with no reverse dependencies
-# Requirements: pacman, pacman-contrib
-
-packages=$(pacman -Q | awk '{print $1}')
-
-for package in $packages
+for package in $(pacman -Qq)
 do
-  pactree -r "$package" | \
-  awk -v RS='' '/\n[ ├─]/ {sub(/[^\n]*\n[^\n]*\n/, ""); print; next} {sub(/\n[├─].*\n/, "\n")} 1' | \
-  grep -v '[│└─]' || true
+  if [[ $(pactree -r $package | wc -l) -eq 1 ]]; then
+    echo $package
+  fi
 done
+
